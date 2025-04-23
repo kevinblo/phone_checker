@@ -1,6 +1,6 @@
 import csv
 import io
-from urllib.request import urlopen
+from urllib.request import Request, urlopen
 
 from django.core.management.base import BaseCommand
 from registry.models import PhoneCode
@@ -13,10 +13,10 @@ CSV_URLS = [
 ]
 
 class Command(BaseCommand):
-    help = "Импортирует реестр номеров"
+    help = "Импортирует реестр номеров из Минцифры"
 
     def handle(self, *args, **kwargs):
-        self.stdout.write("Импорт данных...")
+        self.stdout.write("Начинается импорт данных...")
 
         PhoneCode.objects.all().delete()
         count = 0
@@ -24,7 +24,13 @@ class Command(BaseCommand):
         for url in CSV_URLS:
             self.stdout.write(f"Загрузка: {url}")
             try:
-                response = urlopen(url)
+                req = Request(
+                    url,
+                    headers={
+                        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+                    }
+                )
+                response = urlopen(req)
                 csv_data = io.TextIOWrapper(response, encoding='utf-8')
                 reader = csv.DictReader(csv_data, delimiter=';')
 
