@@ -1,0 +1,1 @@
+0 3 * * * /usr/local/bin/python /app/manage.py import_registry >> /var/log/cron.log 2>&1

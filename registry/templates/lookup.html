@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Проверка номера</title>
+</head>
+<body>
+<h1>Проверка номера телефона</h1>
+<form method="get">
+    {{ form.as_p }}
+    <button type="submit">Проверить</button>
+</form>
+
+{% if result %}
+    <h3>Результат:</h3>
+    <p><strong>Оператор:</strong> {{ result.operator }}</p>
+    <p><strong>Регион:</strong> {{ result.region }}</p>
+{% elif form.is_bound %}
+    <p>Номер не найден.</p>
+{% endif %}
+</body>
+</html>
