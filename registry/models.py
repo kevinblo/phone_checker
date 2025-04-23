@@ -7,8 +7,8 @@ class PhoneCode(models.Model):
     start = models.BigIntegerField()
     end = models.BigIntegerField()
     capacity = models.IntegerField()
-    operator = models.CharField(max_length=255)
-    region = models.CharField(max_length=255, null=True, blank=True)
+    operator = models.CharField(max_length=1500)
+    region = models.CharField(max_length=1500, null=True, blank=True)
     inn = models.CharField(max_length=12)
 
     def __str__(self):
